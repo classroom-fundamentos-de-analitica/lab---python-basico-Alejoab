@@ -11,6 +11,9 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+import re
+
+archivo = open("data.csv").readlines()
 
 
 def pregunta_01():
@@ -21,7 +24,11 @@ def pregunta_01():
     214
 
     """
-    return
+    registros = [i.split("\t") for i in archivo]
+
+    suma = sum(int(x[1]) for x in registros)
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +46,20 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        if i[0] in dicti:
+            dicti[i[0]] += 1
+        else:
+            dicti[i[0]] = 1
+
+    lista = list(dicti.items())
+    lista = sorted(lista, key = lambda x: x[0])
+
+    return lista
 
 
 def pregunta_03():
@@ -57,7 +77,22 @@ def pregunta_03():
     ]
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        if i[0] in dicti:
+            dicti[i[0]] += int(i[1])
+        else:
+            dicti[i[0]] = int(i[1])
+        
+
+    lista = list(dicti.items())
+    lista = sorted(lista, key = lambda x: x[0])
+
+    return lista
+
 
 
 def pregunta_04():
@@ -82,8 +117,22 @@ def pregunta_04():
     ]
 
     """
-    return
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
 
+    for i in registros:
+        mes = re.findall("-([0-9]{2})-", i[2])[0]
+        print(mes)
+        if mes in dicti:
+            dicti[mes] += 1
+        else:
+            dicti[mes] = 1
+        
+
+    lista = list(dicti.items())
+    lista = sorted(lista, key = lambda x: x[0])
+
+    return lista
 
 def pregunta_05():
     """
@@ -100,8 +149,17 @@ def pregunta_05():
     ]
 
     """
-    return
+    registros = [i.split("\t") for i in archivo]
+    letras = sorted(set([i[0] for i in registros]))
 
+    lista = []
+    for letra in letras:
+        maximo = max(list(filter(lambda x: x[0] == letra, registros)), key = lambda x: x[1])[1]
+        minimo = min(list(filter(lambda x: x[0] == letra, registros)), key = lambda x: x[1])[1]
+    
+        lista.append((letra, maximo, minimo))
+
+    return lista
 
 def pregunta_06():
     """
@@ -125,7 +183,28 @@ def pregunta_06():
     ]
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        
+        for j in i[4].split(","):
+            codigo, numero = re.findall("(.*):(.*)", j)[0]
+            if codigo in dicti:
+                dicti[codigo].append(int(numero))
+            else:
+                dicti[codigo] = [int(numero)]
+    
+    lista = []
+    for letra in dicti.keys():
+        maximo = max(dicti[letra])
+        minimo = min(dicti[letra])
+        lista.append((letra, minimo, maximo))
+
+    lista = sorted(lista, key = lambda x: x[0])
+
+    return lista
 
 
 def pregunta_07():
@@ -149,7 +228,21 @@ def pregunta_07():
     ]
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        if i[1] in dicti:
+            dicti[i[1]].append(i[0])
+        else:
+            dicti[i[1]] = [i[0]]
+
+    lista = list(dicti.items())
+    lista = sorted(lista, key = lambda x: x[0])
+
+
+    return lista
 
 
 def pregunta_08():
@@ -174,7 +267,23 @@ def pregunta_08():
     ]
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        if i[1] in dicti:
+            dicti[i[1]].append(i[0])
+        else:
+            dicti[i[1]] = [i[0]]
+
+    lista = list(dicti.items())
+    lista = sorted(lista, key = lambda x: x[0])
+
+    lista = list(map(lambda x: (x[0], sorted(list(set(x[1])))), lista))
+
+    return lista
+
 
 
 def pregunta_09():
@@ -197,7 +306,22 @@ def pregunta_09():
     }
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        
+        for j in i[4].split(","):
+            codigo, _ = re.findall("(.*):(.*)", j)[0]
+            if codigo in dicti:
+                dicti[codigo] += 1
+            else:
+                dicti[codigo] = 1
+    
+
+    return dicti
+
 
 
 def pregunta_10():
@@ -218,7 +342,18 @@ def pregunta_10():
 
 
     """
-    return
+
+    registros = [i.split("\t") for i in archivo]
+    lista = []
+
+    for i in registros:
+        letra = i[0]
+        segundo = len(i[3].split(","))
+        tercero = len(i[4].split(","))
+        lista.append((letra, segundo, tercero))
+
+    return lista
+
 
 
 def pregunta_11():
@@ -239,7 +374,21 @@ def pregunta_11():
 
 
     """
-    return
+    
+    registros = [i.split("\t") for i in archivo]
+    dicti = {}
+
+    for i in registros:
+        
+        for j in i[3].split(","):
+            if j in dicti:
+                dicti[j] += int(i[1])
+            else:
+                dicti[j] = int(i[1])
+    
+
+    return dicti
+
 
 
 def pregunta_12():
@@ -257,4 +406,18 @@ def pregunta_12():
     }
 
     """
-    return
+    registros = [i.split("\t") for i in archivo]
+    letras = list(set([i[0] for i in registros]))
+    dicti = {}
+
+    for letra in letras:
+        for i in list(filter(lambda x: x[0] == letra, registros)):        
+            for j in i[4].split(","):
+                _, numero = re.findall("(.*):(.*)", j)[0]
+                if letra in dicti:
+                    dicti[letra] += int(numero)
+                else:
+                    dicti[letra] = int(numero)
+
+
+    return dicti
