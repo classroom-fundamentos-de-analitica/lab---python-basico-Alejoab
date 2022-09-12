@@ -157,7 +157,7 @@ def pregunta_05():
         maximo = max(list(filter(lambda x: x[0] == letra, registros)), key = lambda x: x[1])[1]
         minimo = min(list(filter(lambda x: x[0] == letra, registros)), key = lambda x: x[1])[1]
     
-        lista.append((letra, maximo, minimo))
+        lista.append((letra, int(maximo), int(minimo)))
 
     return lista
 
@@ -233,10 +233,10 @@ def pregunta_07():
     dicti = {}
 
     for i in registros:
-        if i[1] in dicti:
-            dicti[i[1]].append(i[0])
+        if int(i[1]) in dicti:
+            dicti[int(i[1])].append(i[0])
         else:
-            dicti[i[1]] = [i[0]]
+            dicti[int(i[1])] = [i[0]]
 
     lista = list(dicti.items())
     lista = sorted(lista, key = lambda x: x[0])
@@ -272,10 +272,10 @@ def pregunta_08():
     dicti = {}
 
     for i in registros:
-        if i[1] in dicti:
-            dicti[i[1]].append(i[0])
+        if int(i[1]) in dicti:
+            dicti[int(i[1])].append(i[0])
         else:
-            dicti[i[1]] = [i[0]]
+            dicti[int(i[1])] = [i[0]]
 
     lista = list(dicti.items())
     lista = sorted(lista, key = lambda x: x[0])
